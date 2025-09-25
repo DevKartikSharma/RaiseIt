@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-baloo-bhai: 'Baloo Bhai 2', cursive;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+font-family: var(--font-sans);
+}
+
+
+.baloo-light {
+  font-family: var(--font-baloo-bhai);
+  font-weight: 300;
+}
+
+.baloo-regular {
+  font-family: var(--font-baloo-bhai);
+  font-weight: 400;
+}
+
+.baloo-medium {
+  font-family: var(--font-baloo-bhai);
+  font-weight: 500;
+}
+
+.baloo-semibold {
+  font-family: var(--font-baloo-bhai);
+  font-weight: 600;
+}
+
+.baloo-bold {
+  font-family: var(--font-baloo-bhai);
+  font-weight: 700;
+}
+
+.baloo-extrabold {
+  font-family: var(--font-baloo-bhai);
+  font-weight: 800;
+}
+
+.baloo {
+  font-family: var(--font-baloo-bhai);
+}
+
+body {
+  overflow-y: scroll;
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE/Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none;               /* Chrome, Safari, Edge */
+}
+
+
+#devtools-indicator {
+  display: none !important;
+}
