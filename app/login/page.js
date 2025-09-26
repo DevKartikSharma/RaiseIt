@@ -49,7 +49,7 @@ const Login = () => {
                     <div className="inputs flex flex-col items-center gap-2">
                         <input ref={usernameRef} type="email" placeholder='Email or Username' className='border border-[rgb(55,65,81)] rounded px-4 py-2 h-10 w-72 bg-[rgba(36,43,53,0.65)] ' />
                         <input ref={passwordRef} type="password" placeholder='Password' className='border border-[rgb(55,65,81)] rounded px-4 py-2 h-10 w-72 bg-[rgba(36,43,53,0.65)] ' />
-                        <button className='bg-[rgb(34,40,55)] text-white px-12 py-3 h-10 rounded-lg hover:bg-[rgb(44,49,64)] w-fit' onClick={() => handleLogin()}>Login</button>
+                        <button className='bg-[rgb(34,40,55)] text-white px-12 py-3 h-fit rounded-lg hover:bg-[rgb(44,49,64)] w-fit' onClick={() => handleLogin()}>Login</button>
                     </div>
                 </div>
             </div>

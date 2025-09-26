@@ -4,7 +4,6 @@ import { initiatePayment } from '@/actions/useractions'
 import { useSession } from 'next-auth/react'
 import Script from 'next/script'
 import { toast } from 'react-toastify'
-import { useAppContext } from '../context/AppContext'
 
 const ArtistProfile = ({ username, Details }) => {
     const [Update, setUpdate] = useState(0)
@@ -23,10 +22,18 @@ const ArtistProfile = ({ username, Details }) => {
     }, [paymentDetails])
     const GetAccDetails = async () => {
         try {
-            const res = await fetch(`/api/payments?username=${username}`)
-            const data = await res.json()
-            const AccHistory = data.accHistory
-            setAccHistory(AccHistory)
+            let paymentsFromls = localStorage.getItem(`${username+'payments'}`)
+            if (!paymentsFromls) {
+                const res = await fetch(`/api/payments?username=${username}`)
+                console.log('Payments from db');
+                const data = await res.json()
+                localStorage.setItem(`${username+'payments'}`,JSON.stringify(data.accHistory))
+                setAccHistory(data.accHistory)
+                return
+            }
+            console.log('payments from ls');
+            setAccHistory(JSON.parse(paymentsFromls))
+
         } catch (e) {
             console.log('Error:' + e);
         }
@@ -46,15 +53,15 @@ const ArtistProfile = ({ username, Details }) => {
         pay(amount)
     }
     const pay = async (amount) => {
-        if(paymentDetails.name===''){
+        if (paymentDetails.name === '') {
             toast.error("Name is Mandatory")
             return
         }
-        if(amount==''){
+        if (amount == '') {
             toast.error("Enter amount")
             return
         }
-        if(paymentDetails.message==''){
+        if (paymentDetails.message == '') {
             toast.error("Message is Mandatory")
             return
         }
@@ -84,9 +91,9 @@ const ArtistProfile = ({ username, Details }) => {
                     if (res.ok && data.success) {
                         toast.success("Payment Completed!");
                         amountRef.current.value = ''
-                        setPaymentDetails({name: '',message: ''})
-                        setUpdate(Update + 1)
-
+                        setPaymentDetails({ name: '', message: '' })
+                        setUpdate((prev) => prev + 1)
+                        localStorage.removeItem(`${username+'payments'}`)
                     } else {
                         toast.error("❌ Payment verification failed!");
                     }
@@ -135,16 +142,16 @@ const ArtistProfile = ({ username, Details }) => {
                 </div>
             </div>
             <div className="payments w-[82vw] flex  gap-[2vh] baloo m-10">
-                <section className='w-full bg-[rgb(15,22,41)] h-106 rounded-lg p-7 pt-10'>
+                <section className='w-full overflow-y-scroll scrollbar-hide bg-[rgb(15,22,41)] h-106 rounded-lg p-7 pt-10'>
                     <h1 className='text-lg baloo-regular text-white'>
                         Top 10 Supporters.
                     </h1>
                     <div className="pl-3 mt-3 w-full h-full">
-                        <ul className='space-y-1 *w-100 h-full'>
+                        <ul className='*w-100 h-full space-y-2'>
                             {AccHistory.length === 0 ? <><div className='flex font-light text-xl h-full w-full'>No Funds as of Now
                             </div></> : AccHistory.map((item) => (
                                 <li key={item._id} className='flex gap-1 text-white items-center '>
-                                    <span><img src="/avatar.gif" alt="" width={40}  /></span>
+                                    <div className='w-[40px] h-[40px] shrink-0'><img src="/avatar.gif" alt="" width={40} /></div>
                                     <span className='baloo text-md font-extralight'>{capitalize(item.payerName)} donated <b className='font-bold'>₹ {item.amount / 100}</b> with a message "{capitalize(item.message)}"</span>
                                 </li>
                             ))}
@@ -161,7 +168,7 @@ const ArtistProfile = ({ username, Details }) => {
                         <textarea name="message" value={paymentDetails.message} onChange={handlechange} id="" cols="30" rows="4" placeholder='Message' className='w-full bg-[rgb(34,40,55)] baloo text-white p-3 mb-0 rounded-lg outline-none placeholder:text-[rgb(129,129,129)] h-25'></textarea>
                         <button className='w-full bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgb(133,133,133)] transition-all duration-200' onClick={() => { handleCustomPay() }}>Pay</button>
                         <div className="flex space-x-2">
-                            <button className='flex justify-center items-center h-10 w-fit bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 50}}>Donate ₹ 50</button>
+                            <button className='flex justify-center items-center h-10 w-fit bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 50 }}>Donate ₹ 50</button>
                             <button className=' flex justify-center items-center w-fit h-10 bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 100 }}>Donate ₹ 100</button>
                             <button className=' flex justify-center items-center h-10 w-fit bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 200 }}>Donate ₹ 200</button>
                         </div>

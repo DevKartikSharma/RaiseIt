@@ -1,11 +1,10 @@
 'use client'
 import Profiles from '../components/Profiles'
 import { useEffect, useState } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useSession } from 'next-auth/react';
 
 const Supportees = () => {
-    
-    const { artistsUpdate } = useAppContext()
+    const { data: status } = useSession()
     const [details, setDetails] = useState([])
     const updateDetails = async () => {
         const res = await fetch(`/api/getArtists`)
@@ -19,7 +18,7 @@ const Supportees = () => {
         const lsdata = localStorage.getItem("details")
         if (!lsdata) {
             await updateDetails()
-            return 
+            return
         }
         console.log('hi from ls');
         setDetails(JSON.parse(lsdata))
@@ -27,9 +26,6 @@ const Supportees = () => {
     useEffect(() => {
         getDetails()
     }, [])
-    useEffect(() => {
-        updateDetails();
-    }, [artistsUpdate])
     if (status === 'loading') {
         return <div className='flex justify-center items-center min-h-screen text-3xl baloo'>Loading . . .</div>
     }

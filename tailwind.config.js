@@ -5,8 +5,7 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],// or 'class', depending on your setup
   plugins: [
-    require('tailwind-scrollbar-hide'),
-    require('tailwindcss-autofill'),
+    require('tailwind-scrollbar'),
   ],
 
   darkMode: 'class',

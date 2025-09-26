@@ -75,3 +75,6 @@ body::-webkit-scrollbar {
 #devtools-indicator {
   display: none !important;
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
