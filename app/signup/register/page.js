@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
-const page = () => {
+const Page = () => {
     const { data: session, status } = useSession()
 
     const [Show, setShow] = useState(false)
@@ -69,4 +69,4 @@ const page = () => {
     </>
 }
 
-export default page
+export default Page
