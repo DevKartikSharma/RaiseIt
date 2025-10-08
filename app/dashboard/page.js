@@ -25,7 +25,7 @@ const Dashboard = () => {
                     </div>
                     <div className="fields">
                         <h2>Total donations</h2>
-                        <input type="text" value={'₹ '+session?.user?.donations || ''} readOnly className='border border-[rgb(55,65,81)] rounded px-4 py-2 mb-2 w-full bg-[rgba(36,43,53,0.65)] ' />
+                        <input type="text" value={'₹ '+`${!session?.user?.donations?0:session?.user?.donations}` || ''} readOnly className='border border-[rgb(55,65,81)] rounded px-4 py-2 mb-2 w-full bg-[rgba(36,43,53,0.65)] ' />
                     </div>
                 </div>
                 <div className="fields mt-4 w-[448px]">

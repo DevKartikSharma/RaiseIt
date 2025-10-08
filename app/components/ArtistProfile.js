@@ -22,12 +22,12 @@ const ArtistProfile = ({ username, Details }) => {
     }, [paymentDetails])
     const GetAccDetails = async () => {
         try {
-            let paymentsFromls = localStorage.getItem(`${username+'payments'}`)
+            let paymentsFromls = localStorage.getItem(`${username + 'payments'}`)
             if (!paymentsFromls) {
                 const res = await fetch(`/api/payments?username=${username}`)
                 console.log('Payments from db');
                 const data = await res.json()
-                localStorage.setItem(`${username+'payments'}`,JSON.stringify(data.accHistory))
+                localStorage.setItem(`${username + 'payments'}`, JSON.stringify(data.accHistory))
                 setAccHistory(data.accHistory)
                 return
             }
@@ -91,9 +91,24 @@ const ArtistProfile = ({ username, Details }) => {
                     if (res.ok && data.success) {
                         toast.success("Payment Completed!");
                         amountRef.current.value = ''
-                        setPaymentDetails({ name: '', message: '' })
-                        setUpdate((prev) => prev + 1)
-                        localStorage.removeItem(`${username+'payments'}`)
+                        const result = await fetch('/api/updateDonations', {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                username:session?.user?.username,
+                                donation:session?.user?.donations+amount/100
+                            })
+                        })
+                        let data = await result.json()
+                        if(result.ok&&data.success){
+                            setPaymentDetails({ name: '', message: '' })
+                            setUpdate((prev) => prev + 1)
+                            localStorage.removeItem(`${username + 'payments'}`)
+                        }else{
+                            toast.error('error while updating donations')
+                        }
                     } else {
                         toast.error("❌ Payment verification failed!");
                     }
