@@ -4,22 +4,32 @@ import { initiatePayment } from '@/actions/useractions'
 import { useSession } from 'next-auth/react'
 import Script from 'next/script'
 import { toast } from 'react-toastify'
+import { useAppContext } from '../context/AppContext'
 
 const ArtistProfile = ({ username, Details }) => {
     const [Update, setUpdate] = useState(0)
-    const { data: session } = useSession()
+    const {needDonationsfetch,setNeedDonationsfetch}=useAppContext()
+    const { data: session ,update} = useSession()
     const details = JSON.parse(Details)
     const [AccHistory, setAccHistory] = useState([])
+    const [descendingHistory, setDescendinghistory] = useState([])
+    useEffect(() => {
+        if(AccHistory.length>0){
+            const sorted = [...AccHistory].sort((a,b)=>b.amount-a.amount)
+            setDescendinghistory(sorted.slice(0,10))
+        }
+        
+    }, [AccHistory])
+    
     useEffect(() => {
         GetAccDetails()
+        console.log(descendingHistory);
+        console.log(AccHistory);
     }, [Update])
     const [paymentDetails, setPaymentDetails] = useState({
         name: '',
         message: ''
     })
-    useEffect(() => {
-        console.log(paymentDetails)
-    }, [paymentDetails])
     const GetAccDetails = async () => {
         try {
             let paymentsFromls = localStorage.getItem(`${username + 'payments'}`)
@@ -91,6 +101,10 @@ const ArtistProfile = ({ username, Details }) => {
                     if (res.ok && data.success) {
                         toast.success("Payment Completed!");
                         amountRef.current.value = ''
+                        const updated = await update();
+                        const newdonations = updated?.user?.donations||0;
+                        setNeedDonationsfetch(true)
+                        console.log('raised a request for donatons update');
                         const result = await fetch('/api/updateDonations', {
                             method: "POST",
                             headers: {
@@ -98,7 +112,7 @@ const ArtistProfile = ({ username, Details }) => {
                             },
                             body: JSON.stringify({
                                 username:session?.user?.username,
-                                donation:session?.user?.donations+amount/100
+                                donation:newdonations+amount/100
                             })
                         })
                         let data = await result.json()
@@ -164,7 +178,7 @@ const ArtistProfile = ({ username, Details }) => {
                     <div className="pl-3 mt-3 w-full h-full">
                         <ul className='*w-100 h-full space-y-2'>
                             {AccHistory.length === 0 ? <><div className='flex font-light text-xl h-full w-full'>No Funds as of Now
-                            </div></> : AccHistory.map((item) => (
+                            </div></> : descendingHistory.map((item) => (
                                 <li key={item._id} className='flex gap-1 text-white items-center '>
                                     <div className='w-[40px] h-[40px] shrink-0'><img src="/avatar.gif" alt="" width={40} /></div>
                                     <span className='baloo text-md font-extralight'>{capitalize(item.payerName)} donated <b className='font-bold'>₹ {item.amount / 100}</b> with a message "{capitalize(item.message)}"</span>

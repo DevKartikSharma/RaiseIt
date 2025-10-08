@@ -7,6 +7,8 @@ export async function POST(request) {
     try {
         const body = await request.json()
         const { username, donation } = body
+        console.log(username);
+        console.log(donation);
         await ConnectDB()
         const user = await User.findOneAndUpdate({ username: username }, { donations: donation }, { new: true })
         if (!user) {

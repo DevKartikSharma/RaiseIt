@@ -1,11 +1,9 @@
 import { Artist } from '../../models/artists';
 import { ConnectDB } from '../../lib/mongoose';
 import ArtistProfile from '@/app/components/ArtistProfile';
-import { Payment } from '@/app/models/Payment';
 
 
 const artistCache = new Map();
-const paymentCache = new Map();
 
 const getArtistFromCache = async (username) => {
     try {
