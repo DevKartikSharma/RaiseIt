@@ -13,7 +13,6 @@ const Dashboard = () => {
             const updateDonations = async () => {
                 const updated = await update()
                 setupdatedSession(updated)
-                console.log('updated');
 
                 setNeedDonationsfetch(false)
             }

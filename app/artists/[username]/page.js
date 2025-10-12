@@ -8,7 +8,6 @@ const artistCache = new Map();
 const getArtistFromCache = async (username) => {
     try {
         if (artistCache.has(username)) {
-            console.log('from cache');
             return artistCache.get(username);
         }
         await ConnectDB();
@@ -18,18 +17,16 @@ const getArtistFromCache = async (username) => {
         ).lean();
 
         artistCache.set(username, artist);
-        console.log('from db');
 
         return artist;
     } catch (e) {
-        console.log('Error fetching artist:', e);
+        console.error('Error fetching artist from DB/cache:', e);
         return null;
     }
 }
 
 const User = async ({ params }) => {
     const username = params?.username;
-    console.log(username);
     let details = await getArtistFromCache(username)
     if (!details) {
         return <div className="flex items-center justify-center min-h-screen text-white text-lg">

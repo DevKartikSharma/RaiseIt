@@ -7,7 +7,6 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const username = searchParams.get('username');
     const accHistory = await Payment.find({ RecieverId: username, done: true }, '_id payerName amount message').lean()
-    console.log(accHistory);
     if (!accHistory) {
         return NextResponse.json({ message: "details Not found" }, { status: 404 })
     }

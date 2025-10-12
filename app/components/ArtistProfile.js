@@ -35,17 +35,15 @@ const ArtistProfile = ({ username, Details }) => {
             let paymentsFromls = localStorage.getItem(`${username + 'payments'}`)
             if (!paymentsFromls) {
                 const res = await fetch(`/api/payments?username=${username}`)
-                console.log('Payments from db');
                 const data = await res.json()
                 localStorage.setItem(`${username + 'payments'}`, JSON.stringify(data.accHistory))
                 setAccHistory(data.accHistory)
                 return
             }
-            console.log('payments from ls');
             setAccHistory(JSON.parse(paymentsFromls))
 
         } catch (e) {
-            console.log('Error:' + e);
+            console.error('Error fetching payment details:', e);
         }
     }
 

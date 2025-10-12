@@ -9,7 +9,6 @@ const Supportees = () => {
     const updateDetails = async () => {
         const res = await fetch(`/api/getArtists`)
         const data = await res.json()
-        console.log('hi from db')
         setDetails(data.artistsdetails)
         const a = JSON.stringify(data.artistsdetails)
         localStorage.setItem("details", a)
@@ -20,7 +19,6 @@ const Supportees = () => {
             await updateDetails()
             return
         }
-        console.log('hi from ls');
         setDetails(JSON.parse(lsdata))
     }
     useEffect(() => {

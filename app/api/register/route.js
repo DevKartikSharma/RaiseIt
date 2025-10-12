@@ -5,7 +5,6 @@ import { ConnectDB } from "../../lib/mongoose";
 export async function POST(request) {
     await ConnectDB()
     const body = await request.json();
-    console.log(body.password);
     let newUser = await new User({
         email: body.user.email,
         name: body.user.name,
