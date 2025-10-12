@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState,useCallback, useEffect, useRef } from 'react'
 import { initiatePayment } from '@/actions/useractions'
 import { useSession } from 'next-auth/react'
 import Script from 'next/script'
@@ -9,43 +9,41 @@ import { useAppContext } from '../context/AppContext'
 
 const ArtistProfile = ({ username, Details }) => {
     const [Update, setUpdate] = useState(0)
-    const {needDonationsfetch,setNeedDonationsfetch}=useAppContext()
-    const { data: session ,update} = useSession()
+    const { needDonationsfetch, setNeedDonationsfetch } = useAppContext()
+    const { data: session, update } = useSession()
     const details = JSON.parse(Details)
     const [AccHistory, setAccHistory] = useState([])
     const [descendingHistory, setDescendinghistory] = useState([])
     useEffect(() => {
-        if(AccHistory.length>0){
-            const sorted = [...AccHistory].sort((a,b)=>b.amount-a.amount)
-            setDescendinghistory(sorted.slice(0,10))
+        if (AccHistory.length > 0) {
+            const sorted = [...AccHistory].sort((a, b) => b.amount - a.amount)
+            setDescendinghistory(sorted.slice(0, 10))
         }
-        
+
     }, [AccHistory])
-    
-    useEffect(() => {
-        GetAccDetails()
-    }, [Update])
+
     const [paymentDetails, setPaymentDetails] = useState({
         name: '',
         message: ''
     })
-    const GetAccDetails = async () => {
+    const GetAccDetails = useCallback(async () => {
         try {
-            let paymentsFromls = localStorage.getItem(`${username + 'payments'}`)
+            let paymentsFromls = localStorage.getItem(`${username + 'payments'}`);
             if (!paymentsFromls) {
-                const res = await fetch(`/api/payments?username=${username}`)
-                const data = await res.json()
-                localStorage.setItem(`${username + 'payments'}`, JSON.stringify(data.accHistory))
-                setAccHistory(data.accHistory)
-                return
+                const res = await fetch(`/api/payments?username=${username}`);
+                const data = await res.json();
+                localStorage.setItem(`${username + 'payments'}`, JSON.stringify(data.accHistory));
+                setAccHistory(data.accHistory);
+                return;
             }
-            setAccHistory(JSON.parse(paymentsFromls))
-
+            setAccHistory(JSON.parse(paymentsFromls));
         } catch (e) {
             console.error('Error fetching payment details:', e);
         }
-    }
-
+    }, [username]);
+    useEffect(() => {
+        GetAccDetails()
+    }, [Update, GetAccDetails])
     let Amount = 0
     for (let i = 0; i < AccHistory.length; i++) {
         Amount += AccHistory[i].amount
@@ -99,7 +97,7 @@ const ArtistProfile = ({ username, Details }) => {
                         toast.success("Payment Completed!");
                         amountRef.current.value = ''
                         const updated = await update();
-                        const newdonations = updated?.user?.donations||0;
+                        const newdonations = updated?.user?.donations || 0;
                         setNeedDonationsfetch(true)
                         console.log('raised a request for donatons update');
                         const result = await fetch('/api/updateDonations', {
@@ -108,16 +106,16 @@ const ArtistProfile = ({ username, Details }) => {
                                 "Content-Type": "application/json"
                             },
                             body: JSON.stringify({
-                                username:session?.user?.username,
-                                donation:newdonations+amount/100
+                                username: session?.user?.username,
+                                donation: newdonations + amount / 100
                             })
                         })
                         let data = await result.json()
-                        if(result.ok&&data.success){
+                        if (result.ok && data.success) {
                             setPaymentDetails({ name: '', message: '' })
                             setUpdate((prev) => prev + 1)
                             localStorage.removeItem(`${username + 'payments'}`)
-                        }else{
+                        } else {
                             toast.error('error while updating donations')
                         }
                     } else {
@@ -178,7 +176,7 @@ const ArtistProfile = ({ username, Details }) => {
                             </div></> : descendingHistory.map((item) => (
                                 <li key={item._id} className='flex gap-1 text-white items-center'>
                                     <div className='w-[40px] h-[40px] shrink-0'><Image src="/avatar.gif" alt="Avatar" width={40} height={40} /></div>
-                                    <span className='baloo text-md font-extralight'>{capitalize(item.payerName)} donated <b className='font-bold'>₹ {item.amount / 100}</b> with a message "{capitalize(item.message)}"</span>
+                                    <span className='baloo text-md font-extralight'>{capitalize(item.payerName)} donated <b className='font-bold'>₹ {item.amount / 100}</b> with a message &quot;{capitalize(item.message)}&quot;</span>
                                 </li>
                             ))}
                         </ul>
