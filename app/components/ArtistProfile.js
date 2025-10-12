@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image";
 import React, { useState, useEffect, useRef } from 'react'
 import { initiatePayment } from '@/actions/useractions'
 import { useSession } from 'next-auth/react'
@@ -23,8 +24,6 @@ const ArtistProfile = ({ username, Details }) => {
     
     useEffect(() => {
         GetAccDetails()
-        console.log(descendingHistory);
-        console.log(AccHistory);
     }, [Update])
     const [paymentDetails, setPaymentDetails] = useState({
         name: '',
@@ -153,14 +152,14 @@ const ArtistProfile = ({ username, Details }) => {
         />
         <div className='flex flex-col min-h-screen items-center w-full mx-auto select-none'>
             <div className="frame w-full relative flex flex-col justify-center items-center">
-                <img src={`${details.cover}`} alt="" className='w-full h-[40vh] object-cover z-0' />
+                <Image src={details.cover} alt="Cover" width={1200} height={400} className='w-full h-[40vh] object-cover z-0' />
                 <div className="bg-[rgba(0,0,0,0.67)] z-10 h-[40vh] absolute top-0 w-full flex justify-center items-center ">
                     <h2 className="text-lg leading-relaxed baloo tracking-wide z-20 w-4/5 text-center rounded-lg p-3 pb-10 ">
                         {`${details.bio}`}
                     </h2>
                 </div>
 
-                <img className='w-28 h-28 rounded-full object-cover overflow-clip border-2 border-white absolute top-[30vh] z-20' src={`${details.pic}`} alt="" />
+                <Image className='w-28 h-28 rounded-full object-cover overflow-clip border-2 border-white absolute max-sm:top-[290px] top-[315px] z-20' src={details.pic} alt="Profile" width={112} height={112} />
 
                 <div className="text-center mt-13">
                     <h1 className='text-xl baloo-regular  top-[47vh] z-20'>@{`${username}`}</h1>
@@ -168,17 +167,17 @@ const ArtistProfile = ({ username, Details }) => {
                     <h2 className='text-sm text-[rgb(129,129,129)] baloo '>{`${AccHistory.length}`} Payments | ₹{Amount / 100} Raised</h2>
                 </div>
             </div>
-            <div className="payments w-[82vw] flex  gap-[2vh] baloo m-10">
-                <section className='w-full overflow-y-scroll scrollbar-hide bg-[rgb(15,22,41)] h-106 rounded-lg p-7 pt-10'>
+            <div className="payments w-[82vw] flex max-md:flex-col gap-[2vh] baloo m-10">
+                <section className='w-full overflow-y-scroll scrollbar-hide bg-[rgb(15,22,41)] h-106 max-md:h-fit rounded-lg p-7 pt-10'>
                     <h1 className='text-lg baloo-regular text-white'>
                         Top 10 Supporters.
                     </h1>
                     <div className="pl-3 mt-3 w-full h-full">
                         <ul className='*w-100 h-full space-y-2'>
-                            {AccHistory.length === 0 ? <><div className='flex font-light text-xl h-full w-full'>No Funds as of Now
+                            {AccHistory.length === 0 ? <><div className='flex font-light text-xl max-lg:text-lg h-full w-full'>No Funds as of Now
                             </div></> : descendingHistory.map((item) => (
-                                <li key={item._id} className='flex gap-1 text-white items-center '>
-                                    <div className='w-[40px] h-[40px] shrink-0'><img src="/avatar.gif" alt="" width={40} /></div>
+                                <li key={item._id} className='flex gap-1 text-white items-center'>
+                                    <div className='w-[40px] h-[40px] shrink-0'><Image src="/avatar.gif" alt="Avatar" width={40} height={40} /></div>
                                     <span className='baloo text-md font-extralight'>{capitalize(item.payerName)} donated <b className='font-bold'>₹ {item.amount / 100}</b> with a message "{capitalize(item.message)}"</span>
                                 </li>
                             ))}
@@ -195,9 +194,9 @@ const ArtistProfile = ({ username, Details }) => {
                         <textarea name="message" value={paymentDetails.message} onChange={handlechange} id="" cols="30" rows="4" placeholder='Message' className='w-full bg-[rgb(34,40,55)] baloo text-white p-3 mb-0 rounded-lg outline-none placeholder:text-[rgb(129,129,129)] h-25'></textarea>
                         <button className='w-full bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgb(133,133,133)] transition-all duration-200' onClick={() => { handleCustomPay() }}>Pay</button>
                         <div className="flex space-x-2">
-                            <button className='flex justify-center items-center h-10 w-fit bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 50 }}>Donate ₹ 50</button>
-                            <button className=' flex justify-center items-center w-fit h-10 bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 100 }}>Donate ₹ 100</button>
-                            <button className=' flex justify-center items-center h-10 w-fit bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 200 }}>Donate ₹ 200</button>
+                            <button className='flex justify-center items-center h-10 w-fit bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 50 }}>₹ 50</button>
+                            <button className=' flex justify-center items-center w-fit h-10 bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 100 }}>₹ 100</button>
+                            <button className=' flex justify-center items-center h-10 w-fit bg-[rgb(34,40,55)] baloo text-white p-3 mt-0 rounded-lg hover:bg-[rgba(133,133,133,0.25)] transition-all duration-200' onClick={() => { amountRef.current.value = 200 }}>₹ 200</button>
                         </div>
                     </div>
                 </section>

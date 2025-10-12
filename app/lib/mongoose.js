@@ -19,8 +19,6 @@ export async function ConnectDB() {
     if (!cached.promise) {
         cached.promise = mongoose.connect(uri, {
             bufferCommands: false,
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
         }).then((mongoose) => {
             return mongoose
         })

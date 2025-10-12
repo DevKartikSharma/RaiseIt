@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image";
 import React, { useEffect, useRef } from 'react'
 import { useSession, signIn } from "next-auth/react"
 import { useRouter } from 'next/navigation'
@@ -50,7 +51,7 @@ const Login = () => {
         <div className=' flex flex-col  items-center min-h-screen select-none'>
             <div className=" flex justify-center items-center text-3xl pt-48 baloo-semibold ">
                 <span className="pt-4 pl-8">Login so you can get a chai</span>
-                <span> <img src="tea.gif" style={{ width: 80 }} alt="" /></span>
+                <span> <Image src="/tea.gif" width={80} height={80} alt="Chai" /></span>
             </div>
             <div>
                 <div className="flex flex-col gap-2 p-10 pt-5">

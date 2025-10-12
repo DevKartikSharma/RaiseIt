@@ -4,10 +4,10 @@ import Link from 'next/link'
 
 const Profiles = ({ details }) => {
     return <>
-        <div className='flex flex-col min-h-screen items-center w-[80vw] mx-auto mt-15 select-none'>
+        <div className='flex flex-col min-h-screen max-sm:min-h-[700px] items-center w-[80vw] mx-auto mt-15 select-none'>
             <div className="head flex items-center flex-col mt-1 gap-2">
-                <h1 className='text-5xl baloo-semibold '>Our supportees</h1>
-                <h2 className='text-xl  baloo-regular'>You can give them a <b>Chai</b></h2>
+                <h1 className='text-5xl max-sm:text-4xl baloo-semibold '>Our supportees</h1>
+                <h2 className='text-xl max-sm:text-lg baloo-regular'>You can give them a <b>Chai</b></h2>
             </div>
             <div className="supportees flex flex-col flex-wrap justify-center gap-2 mt-10 w-full">
                 <div className="flex justify-center flex-wrap gap-6">

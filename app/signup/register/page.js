@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image";
 import React, { useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
@@ -16,7 +17,7 @@ const Page = () => {
             session ? <div className=' flex flex-col  items-center min-h-screen select-none'>
                 <div className=" flex justify-center items-center text-3xl pt-28 baloo-semibold ">
                     <span className="pt-4 pl-8">Get your own chai tag</span>
-                    <span> <img src="../tea.gif" style={{ width: 80 }} alt="" /></span>
+                    <span> <Image src="/tea.gif" width={80} height={80} alt="Chai" /></span>
                 </div>
                 <div>
                     <div className="flex flex-col gap-2 p-10 pt-5">
