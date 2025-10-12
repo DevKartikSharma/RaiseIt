@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 const Signup = () => {
     const router = useRouter()
-    const { data: session } = useSession()
+    const { data: session,status } = useSession()
 
     useEffect(() => {
         if (session?.user?.isNewUser) {
