@@ -157,7 +157,7 @@ const ArtistProfile = ({ username, Details }) => {
                     </h2>
                 </div>
 
-                <Image className='w-28 h-28 rounded-full object-cover overflow-clip border-2 border-white absolute max-sm:top-[290px] top-[315px] z-20' src={details.pic} alt="Profile" width={112} height={112} />
+                <img className='w-28 h-28 rounded-full object-cover overflow-clip border-2 border-white absolute max-sm:top-[290px] top-[315px] z-20' src={details.pic} alt="Profile" />
 
                 <div className="text-center mt-13">
                     <h1 className='text-xl baloo-regular  top-[47vh] z-20'>@{`${username}`}</h1>
