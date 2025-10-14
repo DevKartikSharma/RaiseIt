@@ -18,8 +18,10 @@ const Signup = () => {
     if (status === 'loading') {
         return <div className='flex justify-center items-center min-h-screen text-3xl baloo'>Loading . . .</div>
     }
+    
 
     if (session && !session?.user?.isNewUser) {
+            console.log(session?.user?.isNewUser);
         return <>
             <div className='w-full h-screen flex justify-center items-center '>
                 <div className='flex flex-col bg-[rgba(95,95,95,0.1)] rounded-2xl justify-center items-center p-10'>
@@ -35,8 +37,8 @@ const Signup = () => {
 
     return <>
         <div className=' flex flex-col  items-center min-h-screen gap-6 pt-36 select-none'>
-            <div className=" flex justify-center items-center text-3xl baloo-semibold ">
-                <span className="pt-4 pl-8">Register yourself as a ChaiLover</span>
+            <div className=" flex justify-center items-center text-3xl max-sm:text-2xl max-sm:flex-col  baloo-semibold ">
+                <span className="pt-4 pl-8 max-sm:pl-0">Register yourself as a ChaiLover</span>
                 <span> <Image src="/tea.gif" width={80} height={80} alt="Chai" /></span>
             </div>
             <div className='flex flex-col items-center'>

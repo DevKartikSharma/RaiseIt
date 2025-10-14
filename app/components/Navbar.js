@@ -16,7 +16,7 @@ const Navbar = () => {
   const defaultProfile = 'https://imgs.search.brave.com/FWHa9QRttw1JSSHVgTxnaCCKeCisCTYKWv3idxlo3AI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c3ZncmVwby5jb20v/c2hvdy8zMzU0NTUv/cHJvZmlsZS1kZWZh/dWx0LnN2Zw'
 
   return <>
-    <div className='flex justify-between items-center px-10 h-15 baloo-medium text-2xl bg-[rgba(26,25,44,0.59)] relative select-none'>
+    <div className='flex justify-between items-center px-10 max-sm:px-5 h-15 baloo-medium text-2xl bg-[rgba(26,25,44,0.59)] relative select-none'>
       <Link href={'/'} className="max-sm:text-xl">RaiseIt!</Link>
       <div className="navigation flex justify-center items-center text-xl max-sm:text-lg">
 

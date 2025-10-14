@@ -60,6 +60,7 @@
 //       await ConnectDB()
 //       const verifiedUser = await User.findOne({ email: user.email });
 //       user.isNewUser = !verifiedUser;
+//       console.log(user.isNewUser)
 //       return true;
 //     },
 
@@ -93,6 +94,14 @@
 // })
 
 // export { handler as GET, handler as POST }
+
+
+
+
+
+
+
+
 import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
@@ -128,7 +137,7 @@ const handler = NextAuth({
             { username: credentials.email }
           ]
         }, 'name email profilePic username password donations');
-        
+
         if (!user) {
           throw new Error("No user found with this email");
         }
@@ -159,23 +168,41 @@ const handler = NextAuth({
 
       await ConnectDB();
       const verifiedUser = await User.findOne({ email: user.email });
-      user.isNewUser = !verifiedUser;
+      user.isNewUser = verifiedUser ? false : true;
+      console.log(user.isNewUser);
       return true;
     },
 
+    // async jwt({ token, user, account }) {
+    //   // This runs only once when user signs in
+    //   if (user && account) {
+    //     token.name = user.name;
+    //     token.username = user.username;
+    //     token.image = user.image;
+    //     token.email = user.email;
+
+    //     // 👇 Detect if user is new in this context
+    //     if (user.isNewUser !== undefined) {
+    //       token.isNewUser = user.isNewUser;
+    //       console.log("FROM jwt - isNewUser:", token.isNewUser);
+    //     }
+    //   }
+
+    //   return token;
+    // },
+
     async jwt({ token, user }) {
-      if (user && user.username) {
+      if (user && user.isNewUser) {
         token.name = user.name;
         token.username = user.username;
         token.image = user.image;
         token.email = user.email;
-        // Removed: token.donations = user.donations ✅ REMOVED (use DB in session instead)
+        
+        if (user.isNewUser !== undefined) {
+          token.isNewUser = user.isNewUser;
+          console.log('from token : '+ token.isNewUser);
+        }
       }
-
-      if (user?.isNewUser !== undefined) {
-        token.isNewUser = user.isNewUser;
-      }
-
       return token;
     },
 
@@ -191,6 +218,12 @@ const handler = NextAuth({
         session.user.email = dbUser.email;       // ✅ UPDATED
         session.user.donations = dbUser.donations || 0; // ✅ UPDATED
       }
+      if (token?.isNewUser !== undefined) {
+        session.user.isNewUser = token.isNewUser;
+        console.log('from session : ' + session.isNewUser);
+      } else {
+        session.user.isNewUser = false; // fallback just in case
+      }
 
       return session;
     },
@@ -198,6 +231,9 @@ const handler = NextAuth({
 
   session: {
     strategy: "jwt",
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
   },
 })
 

@@ -19,21 +19,18 @@ export default function Home() {
             <div className="baloo-light flex flex-col justify-center items-center space-y-3 w-full md:w-1/3">
               <Image src="/man.gif" width={80} height={80} className="p-2 bg-[rgb(46,46,46)] rounded-full overflow-clip border-[1px] border-gray-300" alt="Man" />
               <div className="flex flex-col justify-center items-center">
-                <h5 className="text-xl md:text-2xl font-bold">Chai</h5>
                 <h6 className="text-base md:text-lg w-40 text-center">You can buy <b className="font-bold">Chai</b> to needy</h6>
               </div>
             </div>
             <div className="baloo-light flex flex-col justify-center items-center space-y-3 w-full md:w-1/3">
               <Image src="/coin.gif" width={80} height={80} className="p-2 bg-[rgb(46,46,46)] rounded-full overflow-clip border-[1px] border-gray-300" alt="Coin" />
               <div className="flex flex-col justify-center items-center">
-                <h5 className="text-xl md:text-2xl font-bold">Chai</h5>
                 <h6 className="text-base md:text-lg w-40 text-center">Some need this <b className="font-bold">Chai</b> more than you</h6>
               </div>
             </div>
             <div className="baloo-light flex flex-col justify-center items-center space-y-3 w-full md:w-1/3">
               <Image src="/avatar.gif" width={80} height={80} className="p-2 bg-[rgb(46,46,46)] rounded-full overflow-clip border-[1px] border-gray-300" alt="Avatar" />
               <div className="flex flex-col justify-center items-center">
-                <h5 className="text-xl md:text-2xl font-bold">Chai</h5>
                 <h6 className="text-base md:text-lg w-40 text-center">There is someone to buy you a <b className="font-bold">Chai</b></h6>
               </div>
             </div>

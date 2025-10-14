@@ -15,8 +15,8 @@ const Page = () => {
     return <>
         {
             session ? <div className=' flex flex-col  items-center min-h-screen select-none'>
-                <div className=" flex justify-center items-center text-3xl pt-28 baloo-semibold ">
-                    <span className="pt-4 pl-8">Get your own chai tag</span>
+                <div className=" flex justify-center items-center text-3xl  max-sm:flex-col  pt-28 baloo-semibold ">
+                    <span className="pt-4 pl-8 max-sm:pl-0">Get your own chai tag</span>
                     <span> <Image src="/tea.gif" width={80} height={80} alt="Chai" /></span>
                 </div>
                 <div>

@@ -159,7 +159,7 @@ const ArtistProfile = ({ username, Details }) => {
 
                 <img className='w-28 h-28 rounded-full object-cover overflow-clip border-2 border-white absolute max-sm:top-[290px] top-[315px] z-20' src={details.pic} alt="Profile" />
 
-                <div className="text-center mt-13">
+                <div className="text-center mt-15">
                     <h1 className='text-xl baloo-regular  top-[47vh] z-20'>@{`${username}`}</h1>
                     <h2 className='text-sm text-[rgb(129,129,129)] baloo'>Let&apos;s help <b>{`${details.name}`}</b> to Get a <b>Chai</b></h2>
                     <h2 className='text-sm text-[rgb(129,129,129)] baloo '>{`${AccHistory.length}`} Payments | ₹{Amount / 100} Raised</h2>
