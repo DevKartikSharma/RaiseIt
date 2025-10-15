@@ -150,33 +150,33 @@ const ArtistProfile = ({ username, Details }) => {
         />
         <div className='flex flex-col min-h-screen items-center w-full mx-auto select-none'>
             <div className="frame w-full relative flex flex-col justify-center items-center">
-                <Image src={details.cover} alt="Cover" width={1200} height={400} className='w-full h-[40vh] object-cover z-0' />
+                <Image src={details.cover} alt="Cover" width={1200} height={400} className='w-full  h-[40vh] object-cover z-0' />
                 <div className="bg-[rgba(0,0,0,0.67)] z-10 h-[40vh] absolute top-0 w-full flex justify-center items-center ">
-                    <h2 className="text-lg leading-relaxed baloo tracking-wide z-20 w-4/5 text-center rounded-lg p-3 pb-10 ">
+                    <h2 className="text-lg max-sm:text-sm leading-relaxed baloo tracking-wide z-20 w-4/5 text-center rounded-lg p-3 pb-10 ">
                         {`${details.bio}`}
                     </h2>
                 </div>
 
-                <img className='w-28 h-28 rounded-full object-cover overflow-clip border-2 border-white absolute max-sm:top-[290px] top-[315px] z-20' src={details.pic} alt="Profile" />
+                <img className='w-28 h-28 rounded-full object-cover overflow-clip border-2 max-sm:border-[0.8px] border-gray-400 absolute max-sm:top-[290px] top-[315px] z-20' src={details.pic} alt="Profile" />
 
                 <div className="text-center mt-15">
-                    <h1 className='text-xl baloo-regular  top-[47vh] z-20'>@{`${username}`}</h1>
+                    <h1 className='text-xl max-sm:text-lg baloo-regular  top-[47vh] z-20'>@{`${username}`}</h1>
                     <h2 className='text-sm text-[rgb(129,129,129)] baloo'>Let&apos;s help <b>{`${details.name}`}</b> to Get a <b>Chai</b></h2>
                     <h2 className='text-sm text-[rgb(129,129,129)] baloo '>{`${AccHistory.length}`} Payments | ₹{Amount / 100} Raised</h2>
                 </div>
             </div>
             <div className="payments w-[82vw] flex max-md:flex-col gap-[2vh] baloo m-10">
-                <section className='w-full overflow-y-scroll scrollbar-hide bg-[rgb(15,22,41)] h-106 max-md:h-fit rounded-lg p-7 pt-10'>
-                    <h1 className='text-lg baloo-regular text-white'>
+                <section className='w-full overflow-y-scroll scrollbar-hide bg-[rgb(15,22,41)] h-106 max-md:h-fit rounded-lg p-10 max-sm:p-4 max-sm:pt-8 pt-10'>
+                    <h1 className='text-lg max-sm:text-md baloo-regular text-white'>
                         Top 10 Supporters.
                     </h1>
-                    <div className="pl-3 mt-3 w-full h-full">
-                        <ul className='*w-100 h-full space-y-2'>
+                    <div className="pl-3 max-sm:pl-1 mt-3 w-full h-full">
+                        <ul className='*w-100 h-full space-y-1'>
                             {AccHistory.length === 0 ? <><div className='flex font-light text-xl max-lg:text-lg h-full w-full'>No Funds as of Now
                             </div></> : descendingHistory.map((item) => (
                                 <li key={item._id} className='flex gap-1 text-white items-center'>
                                     <div className='w-[40px] h-[40px] shrink-0'><Image src="/avatar.gif" alt="Avatar" width={40} height={40} /></div>
-                                    <span className='baloo text-md font-extralight'>{capitalize(item.payerName)} donated <b className='font-bold'>₹ {item.amount / 100}</b> with a message &quot;{capitalize(item.message)}&quot;</span>
+                                    <span className='baloo text-md max-sm:text-sm font-extralight leading-[16px]'>{capitalize(item.payerName)} donated <b className='font-bold'>₹ {item.amount / 100}</b> with a message &quot;{capitalize(item.message)}&quot;</span>
                                 </li>
                             ))}
                         </ul>

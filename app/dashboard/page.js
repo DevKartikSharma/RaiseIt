@@ -20,7 +20,7 @@ const Dashboard = () => {
         }
     }, [needDonationsfetch])
     if (status === 'loading') {
-        return <div className='flex justify-center items-center min-h-screen text-3xl baloo'>Loading . . .</div>
+        return <div className='flex justify-center lg:items-center max-sm:pt-80 min-h-screen  text-lg baloo'>Loading . . .</div>
     }
     return <>
         <div className='baloo min-h-screen max-sm:min-h-[750px] w-full flex flex-col items-center  grow-0 pt-20 select-none'>
