@@ -23,8 +23,8 @@ const Signup = () => {
     if (session && !session?.user?.isNewUser) {
             console.log(session?.user?.isNewUser);
         return <>
-            <div className='w-full h-screen flex justify-center items-center '>
-                <div className='flex flex-col bg-[rgba(95,95,95,0.1)] rounded-2xl justify-center items-center p-10'>
+            <div className='w-full min-h-screen flex justify-center  '>
+                <div className='flex flex-col h-fit mt-50 w-fit mx-10  bg-[rgba(95,95,95,0.1)] rounded-2xl justify-center items-center p-10'>
 
                     <div className='baloo text-xl font-extralight pb-10 text-center'>
                         This Email :<b className='font-medium'> {session?.user?.email}</b> is already registered <br /> So Please login to continue <br />or <br />Try with another Email
