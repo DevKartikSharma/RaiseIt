@@ -66,16 +66,6 @@ RaiseIt is a community-driven crowdfunding platform built with Next.js, React, a
 
 ---
 
-## 📝 How to Run
-
-```bash
-npm install
-npm run dev
-```
-Visit [http://localhost:3000](http://localhost:3000) to get started.
-
----
-
 ## 🤝 Welcome to Contribute!
 
 RaiseIt is open for contributions! Whether you want to fix bugs, add features, or improve documentation, your help is appreciated. Feel free to fork the repo, create pull requests, and join our community.
