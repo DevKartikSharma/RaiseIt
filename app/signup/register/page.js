@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { toast } from 'react-toastify'
 
 const Page = () => {
     const { data: session, status } = useSession()
@@ -10,7 +11,7 @@ const Page = () => {
     const [Show, setShow] = useState(false)
 
     if (status === 'loading') {
-        return <div className='flex justify-center lg:items-center max-sm:pt-80 min-h-screen  text-lg baloo'>Loading . . .</div>
+        return <div className='flex justify-center sm:items-center max-sm:pt-80 min-h-screen text-lg baloo'>Loading . . .</div>
     }
     return <>
         {
@@ -25,15 +26,15 @@ const Page = () => {
                             <div className="inputs w-[448px]  max-sm:w-[78vw] flex items-center flex-col">
                                 <div className="fields">
                                     <h2>Email</h2>
-                                    <input type="email" value={session?.user.email} readOnly className='border border-[rgb(55,65,81)] rounded px-4 py-2 mb-2 w-full max-sm:w-[85vw] hover:bg-[rgba(64,76,91,0.65)] bg-[rgba(36,43,53,0.65)] ' />
+                                    <input type="email" value={session?.user.email} readOnly className='border border-[rgb(55,65,81)] rounded px-4 py-2 mb-2 w-[425px] max-sm:w-[85vw] hover:bg-[rgba(64,76,91,0.65)] bg-[rgba(36,43,53,0.65)] ' />
                                 </div>
                                 <div className="fields">
                                     <h2>Name</h2>
-                                    <input type="name" value={session?.user.name} readOnly className='border border-[rgb(55,65,81)] rounded px-4 py-2 mb-2 w-full max-sm:w-[85vw] hover:bg-[rgba(64,76,91,0.65)] bg-[rgba(36,43,53,0.65)] ' />
+                                    <input type="name" value={session?.user.name} readOnly className='border border-[rgb(55,65,81)] rounded px-4 py-2 mb-2 w-[425px] max-sm:w-[85vw] hover:bg-[rgba(64,76,91,0.65)] bg-[rgba(36,43,53,0.65)] ' />
                                 </div>
                                 <div className="fields">
                                     <h2>Username</h2>
-                                    <input type="text" placeholder='Create a new username' className='username border border-[rgb(55,65,81)] rounded px-4 py-2 mb-2 w-full max-sm:w-[85vw] hover:bg-[rgba(64,76,91,0.65)] bg-[rgba(36,43,53,0.65)]' />
+                                    <input type="text" placeholder='Create a new username' className='username border border-[rgb(55,65,81)] rounded px-4 py-2 mb-2 w-[425px] max-sm:w-[85vw] hover:bg-[rgba(64,76,91,0.65)] bg-[rgba(36,43,53,0.65)]' />
                                 </div>
                                 <div className="fields">
                                     <h2>Password</h2>
@@ -56,9 +57,11 @@ const Page = () => {
                                 const res = await fetch("/api/register", { method: "POST", body: JSON.stringify({ user }) })
                                 if (res.ok) {
                                     console.log(res.message);
+                                    toast.success("You're now registered")
                                     signOut({ callbackUrl: '/login' })
                                 }
                                 else {
+                                    toast.error("Error while registeration please report developer")
                                     console.log(res.error);
                                 }
                             }} />

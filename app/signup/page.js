@@ -16,7 +16,7 @@ const Signup = () => {
     }, [router, session])
 
     if (status === 'loading') {
-        return <div className='flex justify-center lg:items-center max-sm:pt-80 min-h-screen  text-lg baloo'>Loading . . .</div>
+        return <div className='flex justify-center sm:items-center max-sm:pt-80 min-h-screen  text-lg baloo'>Loading . . .</div>
     }
     
 
